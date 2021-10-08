@@ -37,6 +37,17 @@ const removeNote = title => {
   }
 };
 
+//Challenge: Wire up a List command
+
+const listNotes = () => {
+  console.log(chalk.blue('Your Notes!'));
+  const notes = loadNotes();
+  notes.forEach(note => {
+    //forEach goes over each note in notes
+    console.log(note.title + ': ' + note.body);
+  });
+};
+
 const saveNotes = notes => {
   const dataJSON = JSON.stringify(notes);
   fs.writeFileSync('notes.json', dataJSON);
@@ -56,4 +67,5 @@ module.exports = {
   getNotes: getNotes,
   addNote: addNote,
   removeNote: removeNote,
+  listNotes: listNotes,
 };
