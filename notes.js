@@ -7,11 +7,12 @@ const getNotes = () => {
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const duplicateNotes = notes.filter(note => {
-    return note.title === title;
-  }); //discuss with Freddie
+  // const duplicateNotes = notes.filter(note => {
+  //   return note.title === title;
+  // }); //discuss with Freddie
+  const duplicateNote = notes.find(note => note.title === title);
 
-  if (duplicateNotes.length === 0) {
+  if (!duplicateNote) {
     notes.push({
       title: title,
       body: body,
@@ -48,6 +49,20 @@ const listNotes = () => {
   });
 };
 
+//Challenge: Wire up a Read command
+
+const readNote = title => {
+  const notes = loadNotes();
+  const noteRead = notes.find(note => note.title === title);
+
+  if (!noteRead) {
+    console.log(chalk.red('No Note Found, Sorry!'));
+  } else {
+    console.log(chalk.bold.yellow(noteRead.title));
+    console.log(noteRead.body);
+  }
+};
+
 const saveNotes = notes => {
   const dataJSON = JSON.stringify(notes);
   fs.writeFileSync('notes.json', dataJSON);
@@ -68,4 +83,5 @@ module.exports = {
   addNote: addNote,
   removeNote: removeNote,
   listNotes: listNotes,
+  readNote: readNote,
 };
